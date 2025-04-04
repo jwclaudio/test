@@ -1,0 +1,361 @@
+<div id="compare-modal" class="compare-modal" role="dialog" aria-label="Compare ETFs" aria-hidden="true">
+    <div class="compare-modal-overlay"></div>
+    <div class="compare-modal-content">
+        <div class="compare-modal-header">
+            <h3>Compare ETFs</h3>
+            <div class="compare-modal-actions">
+                <span class="compare-count">0/3 ETFs selected</span>
+                <button class="clear-comparison" aria-label="Clear comparison">
+                    <i class="fas fa-times"></i>
+                    Clear
+                </button>
+                <button class="close-modal" aria-label="Close comparison modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="compare-modal-body">
+            <div id="comparison-grid" class="comparison-grid">
+                <!-- Comparison cards will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .compare-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 999999;
+        display: none;
+        isolation: isolate;
+        contain: layout;
+    }
+
+    .compare-modal[aria-hidden="false"] {
+        display: block;
+    }
+
+    .compare-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 1000000;
+        contain: layout;
+    }
+
+    .compare-modal-content {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #ffffff;
+        border-radius: 12px;
+        width: 95%;
+        max-width: 1400px;
+        max-height: 90vh;
+        overflow-y: auto;
+        z-index: 1000001;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        contain: layout;
+    }
+
+    .compare-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        background: #ffffff;
+        border-radius: 12px 12px 0 0;
+        z-index: 1;
+    }
+
+    .compare-modal-header h3 {
+        color: #000000;
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .compare-modal-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .compare-count {
+        color: #000000;
+        opacity: 0.7;
+        font-size: 0.9rem;
+    }
+
+    .clear-comparison {
+        background: none;
+        border: none;
+        padding: 0.5rem 1rem;
+        color: #dc2626;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+
+    .clear-comparison:hover {
+        background: rgba(220, 38, 38, 0.1);
+    }
+
+    .close-modal {
+        background: none;
+        border: none;
+        padding: 0.5rem;
+        color: #000000;
+        cursor: pointer;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+    }
+
+    .close-modal:hover {
+        background: rgba(0, 0, 0, 0.05);
+    }
+
+    .compare-modal-body {
+        padding: 1.5rem;
+    }
+
+    .comparison-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .comparison-card {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        position: relative;
+    }
+
+    .comparison-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    .comparison-card .remove-btn {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: none;
+        border: none;
+        color: #dc2626;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+    }
+
+    .comparison-card .remove-btn:hover {
+        background: rgba(220, 38, 38, 0.1);
+    }
+
+    .comparison-metrics {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .metric-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .metric-label {
+        font-size: 0.8rem;
+        color: #000000;
+        opacity: 0.7;
+    }
+
+    .metric-value {
+        font-size: 0.9rem;
+        color: #000000;
+        font-weight: 500;
+    }
+
+    .metric-difference {
+        font-size: 0.8rem;
+        color: #16a34a;
+    }
+
+    .metric-difference.negative {
+        color: #dc2626;
+    }
+
+    @media (max-width: 768px) {
+        .compare-modal-content {
+            width: 95%;
+            max-height: 95vh;
+        }
+
+        .comparison-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .compare-modal-header {
+            flex-direction: column;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .compare-modal-actions {
+            width: 100%;
+            justify-content: space-between;
+        }
+    }
+</style>
+
+<script>
+    class CompareEtfs {
+        constructor() {
+            this.comparisonList = [];
+            this.modal = document.getElementById('compare-modal');
+            this.grid = document.getElementById('comparison-grid');
+            this.clearButton = document.querySelector('.clear-comparison');
+            this.closeButton = document.querySelector('.close-modal');
+            this.compareCount = document.querySelector('.compare-count');
+            this.setupEventListeners();
+        }
+
+        setupEventListeners() {
+            this.clearButton.addEventListener('click', () => this.clearComparison());
+            this.closeButton.addEventListener('click', () => this.closeModal());
+            this.modal.querySelector('.compare-modal-overlay').addEventListener('click', () => this.closeModal());
+            document.addEventListener('toggleComparison', (e) => this.handleToggleComparison(e.detail));
+            document.addEventListener('keydown', (e) => this.handleKeydown(e));
+        }
+
+        handleKeydown(e) {
+            if (e.key === 'Escape' && !this.modal.getAttribute('aria-hidden')) {
+                this.closeModal();
+            }
+        }
+
+        handleToggleComparison(etf) {
+            const index = this.comparisonList.findIndex(e => e.symbol === etf.symbol);
+            if (index === -1) {
+                if (this.comparisonList.length >= 3) {
+                    alert('You can only compare up to 3 ETFs at a time.');
+                    return;
+                }
+                this.comparisonList.push(etf);
+            } else {
+                this.comparisonList.splice(index, 1);
+            }
+            this.updateComparison();
+        }
+
+        updateComparison() {
+            this.compareCount.textContent = `${this.comparisonList.length}/3 ETFs selected`;
+            if (this.comparisonList.length >= 2) {
+                this.render();
+            } else {
+                this.closeModal();
+            }
+        }
+
+        clearComparison() {
+            this.comparisonList = [];
+            this.updateComparison();
+        }
+
+        closeModal() {
+            this.modal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        openModal() {
+            this.modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        render() {
+            this.grid.innerHTML = '';
+
+            if (this.comparisonList.length < 2) {
+                this.grid.innerHTML = '<div class="empty-state">Select at least 2 ETFs to compare</div>';
+                return;
+            }
+
+            this.comparisonList.forEach(etf => {
+                const card = this.createComparisonCard(etf);
+                this.grid.appendChild(card);
+            });
+
+            this.openModal();
+        }
+
+        createComparisonCard(etf) {
+            const card = document.createElement('div');
+            card.className = 'comparison-card';
+            card.innerHTML = `
+                <button class="remove-btn" aria-label="Remove from comparison">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="etf-symbol">${etf.symbol}</div>
+                <div class="comparison-metrics">
+                    <div class="metric-item">
+                        <span class="metric-label">Asset Class</span>
+                        <span class="metric-value">${etf.asset_class}</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Region</span>
+                        <span class="metric-value">${etf.region}</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">AUM</span>
+                        <span class="metric-value">${etf.aum}</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Expense Ratio</span>
+                        <span class="metric-value">${etf.expense_ratio}</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Price</span>
+                        <span class="metric-value">$${etf.price}</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">YTD Return</span>
+                        <span class="metric-value ${etf.ytd_return >= 0 ? 'positive' : 'negative'}">
+                            ${etf.ytd_return >= 0 ? '+' : ''}${etf.ytd_return}%
+                        </span>
+                    </div>
+                </div>
+            `;
+
+            const removeBtn = card.querySelector('.remove-btn');
+            removeBtn.addEventListener('click', () => this.handleToggleComparison(etf));
+
+            return card;
+        }
+    }
+
+    // Initialize the compare ETFs feature
+    document.addEventListener('DOMContentLoaded', () => {
+        window.compareEtfs = new CompareEtfs();
+    });
+</script> 

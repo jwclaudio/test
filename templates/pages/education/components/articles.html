@@ -1,0 +1,280 @@
+{% macro articles_section() %}
+<div class="articles-section">
+    <div class="articles-container">
+        <h2 class="section-title">Educational Articles</h2>
+        <p class="section-description">Explore our collection of in-depth articles on ETF investing, portfolio strategies, and market insights.</p>
+        
+        <div class="articles-grid">
+            <div class="article-card">
+                <div class="article-image">
+                    <div class="placeholder-image" style="background-color: #3498db; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem;">ETF Basics</div>
+                    <div class="article-category">Basics</div>
+                </div>
+                <div class="article-content">
+                    <h3 class="article-title">Understanding ETF Basics: A Comprehensive Guide</h3>
+                    <p class="article-excerpt">Learn the fundamentals of ETFs, how they work, and why they've become a popular investment vehicle for both beginners and experienced investors.</p>
+                    <div class="article-meta">
+                        <span class="article-date">June 15, 2023</span>
+                        <span class="article-read-time">10 min read</span>
+                    </div>
+                    <a href="#" class="article-link">Read Article</a>
+                </div>
+            </div>
+            
+            <div class="article-card">
+                <div class="article-image">
+                    <div class="placeholder-image" style="background-color: #2ecc71; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem;">Portfolio Diversification</div>
+                    <div class="article-category">Strategy</div>
+                </div>
+                <div class="article-content">
+                    <h3 class="article-title">ETF Portfolio Diversification Strategies</h3>
+                    <p class="article-excerpt">Discover how to build a well-diversified portfolio using ETFs across different asset classes, sectors, and geographic regions.</p>
+                    <div class="article-meta">
+                        <span class="article-date">July 22, 2023</span>
+                        <span class="article-read-time">12 min read</span>
+                    </div>
+                    <a href="#" class="article-link">Read Article</a>
+                </div>
+            </div>
+            
+            <div class="article-card">
+                <div class="article-image">
+                    <div class="placeholder-image" style="background-color: #e74c3c; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem;">ETF vs Mutual Funds</div>
+                    <div class="article-category">Comparison</div>
+                </div>
+                <div class="article-content">
+                    <h3 class="article-title">ETFs vs. Mutual Funds: Which Is Right for You?</h3>
+                    <p class="article-excerpt">A detailed comparison of ETFs and mutual funds, exploring their differences in structure, costs, tax efficiency, and trading flexibility.</p>
+                    <div class="article-meta">
+                        <span class="article-date">August 10, 2023</span>
+                        <span class="article-read-time">8 min read</span>
+                    </div>
+                    <a href="#" class="article-link">Read Article</a>
+                </div>
+            </div>
+            
+            <div class="article-card">
+                <div class="article-image">
+                    <div class="placeholder-image" style="background-color: #f39c12; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem;">Sector ETFs</div>
+                    <div class="article-category">Analysis</div>
+                </div>
+                <div class="article-content">
+                    <h3 class="article-title">Analyzing Sector ETFs: Opportunities and Risks</h3>
+                    <p class="article-excerpt">Explore the benefits and challenges of investing in sector-specific ETFs, and learn how to identify opportunities across different market sectors.</p>
+                    <div class="article-meta">
+                        <span class="article-date">September 5, 2023</span>
+                        <span class="article-read-time">15 min read</span>
+                    </div>
+                    <a href="#" class="article-link">Read Article</a>
+                </div>
+            </div>
+            
+            <div class="article-card">
+                <div class="article-image">
+                    <div class="placeholder-image" style="background-color: #9b59b6; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem;">International ETFs</div>
+                    <div class="article-category">Global</div>
+                </div>
+                <div class="article-content">
+                    <h3 class="article-title">International ETFs: Expanding Your Investment Horizons</h3>
+                    <p class="article-excerpt">Learn how international ETFs can help you diversify your portfolio globally and gain exposure to emerging markets and developed economies.</p>
+                    <div class="article-meta">
+                        <span class="article-date">October 18, 2023</span>
+                        <span class="article-read-time">11 min read</span>
+                    </div>
+                    <a href="#" class="article-link">Read Article</a>
+                </div>
+            </div>
+            
+            <div class="article-card">
+                <div class="article-image">
+                    <div class="placeholder-image" style="background-color: #1abc9c; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem;">ETF Tax Efficiency</div>
+                    <div class="article-category">Tax</div>
+                </div>
+                <div class="article-content">
+                    <h3 class="article-title">Understanding ETF Tax Efficiency</h3>
+                    <p class="article-excerpt">Discover why ETFs are generally more tax-efficient than mutual funds and how this can impact your long-term investment returns.</p>
+                    <div class="article-meta">
+                        <span class="article-date">November 30, 2023</span>
+                        <span class="article-read-time">9 min read</span>
+                    </div>
+                    <a href="#" class="article-link">Read Article</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="articles-pagination">
+            <button class="pagination-btn active">1</button>
+            <button class="pagination-btn">2</button>
+            <button class="pagination-btn">3</button>
+            <button class="pagination-btn next">Next <i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .articles-section {
+        padding: 5rem 0;
+        background-color: var(--bg-primary);
+    }
+    
+    .articles-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+    
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        text-align: center;
+        color: var(--accent-primary);
+    }
+    
+    .section-description {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: var(--text-secondary);
+        text-align: center;
+        max-width: 700px;
+        margin: 0 auto 3rem;
+    }
+    
+    .articles-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+    
+    .article-card {
+        background: var(--card-bg);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .article-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+    
+    .article-image {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+    }
+    
+    .placeholder-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .article-category {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        background-color: var(--accent-primary);
+        color: var(--text-primary);
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+    
+    .article-content {
+        padding: 1.5rem;
+    }
+    
+    .article-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        color: var(--accent-primary);
+        line-height: 1.4;
+    }
+    
+    .article-excerpt {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+    }
+    
+    .article-meta {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+    }
+    
+    .article-link {
+        display: inline-block;
+        color: var(--accent-primary);
+        font-weight: 500;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    
+    .article-link:hover {
+        color: var(--accent-secondary);
+    }
+    
+    .articles-pagination {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+    
+    .pagination-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: var(--card-bg);
+        color: var(--text-secondary);
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .pagination-btn.active {
+        background-color: var(--accent-primary);
+        color: var(--text-primary);
+    }
+    
+    .pagination-btn:hover:not(.active) {
+        background-color: var(--card-hover);
+    }
+    
+    .pagination-btn.next {
+        width: auto;
+        padding: 0 1rem;
+        border-radius: 20px;
+        gap: 0.5rem;
+    }
+    
+    @media (max-width: 768px) {
+        .articles-section {
+            padding: 3rem 0;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+        }
+        
+        .section-description {
+            font-size: 1rem;
+        }
+        
+        .articles-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endmacro %} 

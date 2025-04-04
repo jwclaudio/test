@@ -1,0 +1,355 @@
+<div class="etf-screener" role="region" aria-label="ETF Screener">
+    <div class="screener-container">
+        {% include 'pages/etf_screener/components/screener_tabs.html' %}
+
+        <div class="screener-content">
+            {% include 'pages/etf_screener/components/filter_panel.html' %}
+
+            <div class="tab-contents">
+                <div class="tab-content active" id="basic-tab">
+                    <div class="etf-grid" role="grid">
+                        <!-- ETF cards will be dynamically inserted here -->
+                    </div>
+                </div>
+
+                <div class="tab-content" id="watchlist-tab">
+                    {% include 'pages/etf_screener/components/watchlist.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'pages/etf_screener/components/compare_selection.html' %}
+{% include 'pages/etf_screener/components/compare_etfs.html' %}
+
+<style>
+    .etf-screener {
+        padding: 2rem;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        margin-top: 2rem;
+    }
+
+    .screener-container {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .screener-content {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 2rem;
+    }
+
+    .tab-contents {
+        flex: 1;
+    }
+
+    .tab-content {
+        display: none;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+    .etf-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .etf-card {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .etf-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    .etf-header {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .etf-symbol {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #000000;
+    }
+
+    .etf-name {
+        font-size: 0.9rem;
+        color: #64748b;
+        line-height: 1.4;
+    }
+
+    .etf-metrics {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        flex: 1;
+    }
+
+    .metric-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .metric-label {
+        font-size: 0.8rem;
+        color: #64748b;
+    }
+
+    .metric-value {
+        font-size: 0.9rem;
+        color: #000000;
+        font-weight: 500;
+    }
+
+    .metric-value.positive {
+        color: #16a34a;
+    }
+
+    .metric-value.negative {
+        color: #dc2626;
+    }
+
+    .etf-actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: auto;
+    }
+
+    .compare-btn {
+        background: none;
+        border: 1px solid #2563eb;
+        color: #2563eb;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+    }
+
+    .compare-btn:hover {
+        background: rgba(37, 99, 235, 0.1);
+    }
+
+    .compare-btn.selected {
+        background: #2563eb;
+        color: #ffffff;
+    }
+
+    .watchlist-btn {
+        background: none;
+        border: none;
+        color: #e2e8f0;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+    }
+
+    .watchlist-btn:hover {
+        color: #fbbf24;
+    }
+
+    .watchlist-btn.active {
+        color: #fbbf24;
+    }
+
+    .etf-details {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .detail-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .detail-item .label {
+        font-size: 0.8rem;
+        color: #64748b;
+    }
+
+    .detail-item .value {
+        font-size: 0.9rem;
+        color: #000000;
+        font-weight: 500;
+    }
+
+    .detail-item .value.positive {
+        color: #16a34a;
+    }
+
+    .detail-item .value.negative {
+        color: #dc2626;
+    }
+
+    @media (max-width: 1024px) {
+        .screener-content {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<script>
+    class EtfScreener {
+        constructor() {
+            this.tabs = document.querySelectorAll('.tab-button');
+            this.tabContents = document.querySelectorAll('.tab-content');
+            this.etfGrid = document.querySelector('.etf-grid');
+            this.sampleEtfs = [
+                {
+                    symbol: 'SPY',
+                    name: 'SPDR S&P 500 ETF Trust',
+                    asset_class: 'Large Cap Blend',
+                    region: 'US',
+                    aum: '$500B',
+                    expense_ratio: '0.09%',
+                    price: '500.25',
+                    ytd_return: 12.5
+                },
+                {
+                    symbol: 'QQQ',
+                    name: 'Invesco QQQ Trust',
+                    asset_class: 'Large Cap Growth',
+                    region: 'US',
+                    aum: '$250B',
+                    expense_ratio: '0.20%',
+                    price: '450.75',
+                    ytd_return: 15.2
+                },
+                {
+                    symbol: 'AGG',
+                    name: 'iShares Core U.S. Aggregate Bond ETF',
+                    asset_class: 'Intermediate-Term Bond',
+                    region: 'US',
+                    aum: '$100B',
+                    expense_ratio: '0.04%',
+                    price: '95.50',
+                    ytd_return: -2.1
+                }
+            ];
+            this.setupEventListeners();
+            this.render();
+        }
+
+        setupEventListeners() {
+            this.tabs.forEach(tab => {
+                tab.addEventListener('click', () => this.switchTab(tab));
+            });
+        }
+
+        switchTab(selectedTab) {
+            const tabId = selectedTab.getAttribute('data-tab');
+            
+            this.tabs.forEach(tab => {
+                tab.classList.remove('active');
+                if (tab === selectedTab) {
+                    tab.classList.add('active');
+                }
+            });
+
+            this.tabContents.forEach(content => {
+                content.classList.remove('active');
+                if (content.id === `${tabId}-tab`) {
+                    content.classList.add('active');
+                }
+            });
+        }
+
+        render() {
+            this.etfGrid.innerHTML = '';
+            this.sampleEtfs.forEach(etf => {
+                const card = this.createEtfCard(etf);
+                this.etfGrid.appendChild(card);
+            });
+        }
+
+        createEtfCard(etf) {
+            const card = document.createElement('div');
+            card.className = 'etf-card';
+            card.innerHTML = `
+                <div class="etf-header">
+                    <div class="etf-symbol">${etf.symbol}</div>
+                    <div class="etf-name">${etf.name}</div>
+                </div>
+                <div class="etf-metrics">
+                    <div class="metric-item">
+                        <span class="metric-label">Asset Class</span>
+                        <span class="metric-value">${etf.asset_class}</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Region</span>
+                        <span class="metric-value">${etf.region}</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">AUM</span>
+                        <span class="metric-value">${etf.aum}</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Expense Ratio</span>
+                        <span class="metric-value">${etf.expense_ratio}</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Price</span>
+                        <span class="metric-value">$${etf.price}</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">YTD Return</span>
+                        <span class="metric-value ${etf.ytd_return >= 0 ? 'positive' : 'negative'}">
+                            ${etf.ytd_return >= 0 ? '+' : ''}${etf.ytd_return}%
+                        </span>
+                    </div>
+                </div>
+                <div class="etf-actions">
+                    <button class="compare-btn">
+                        <i class="fas fa-chart-line"></i>
+                        Compare
+                    </button>
+                </div>
+            `;
+
+            const compareBtn = card.querySelector('.compare-btn');
+            compareBtn.addEventListener('click', () => {
+                const isSelected = window.compareEtfs.comparisonList.some(e => e.symbol === etf.symbol);
+                if (isSelected) {
+                    compareBtn.classList.remove('selected');
+                } else {
+                    compareBtn.classList.add('selected');
+                }
+                document.dispatchEvent(new CustomEvent('toggleComparison', { detail: etf }));
+            });
+
+            return card;
+        }
+    }
+
+    // Initialize the ETF screener
+    document.addEventListener('DOMContentLoaded', () => {
+        window.etfScreener = new EtfScreener();
+    });
+</script> 

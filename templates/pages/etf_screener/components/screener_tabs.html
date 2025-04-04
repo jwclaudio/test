@@ -1,0 +1,29 @@
+<div class="screener-tabs">
+    <button class="tab-button active" data-tab="basic">Basic Screening</button>
+    <button class="tab-button" data-tab="watchlist">Watchlist</button>
+</div>
+
+<style>
+    .screener-tabs {
+        display: flex;
+        gap: 1rem;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        padding-bottom: 1rem;
+    }
+
+    .tab-button {
+        background: none;
+        border: none;
+        padding: 0.5rem 1rem;
+        color: #000000;
+        cursor: pointer;
+        font-size: 1rem;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+
+    .tab-button.active {
+        background: #3b82f6;
+        color: #ffffff;
+    }
+</style> 

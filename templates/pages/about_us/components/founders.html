@@ -1,0 +1,162 @@
+{% macro founders_section() %}
+<div class="founders-section">
+    <h2 class="section-title">Our Founders</h2>
+    <div class="founders-grid">
+        <div class="founder-card">
+            <div class="founder-image">
+                <img src="{{ url_for('static', filename='images/founders/james.png') }}" alt="James" onerror="this.src='https://via.placeholder.com/300x300?text=James'">
+            </div>
+            <div class="founder-info">
+                <h3 class="founder-name">James, BA</h3>
+                <p class="founder-title">Co-Founder & CEO</p>
+                <p class="founder-bio">Passionate about democratizing access to sophisticated investment tools. With a background in finance and technology, James founded Yorkian to make ETF investing more accessible to everyone.</p>
+                <div class="founder-social">
+                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="founder-card">
+            <div class="founder-image">
+                <img src="{{ url_for('static', filename='images/founders/max.png') }}" alt="Max" onerror="this.src='https://via.placeholder.com/300x300?text=Max'">
+            </div>
+            <div class="founder-info">
+                <h3 class="founder-name">Max, PhD</h3>
+                <p class="founder-title">Co-Founder & CTO</p>
+                <p class="founder-bio">A technology innovator with expertise in data science and machine learning. Max leads the technical development of Yorkian's platform, ensuring it delivers powerful insights with a user-friendly experience.</p>
+                <div class="founder-social">
+                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="founder-card">
+            <div class="founder-image">
+                <img src="{{ url_for('static', filename='images/founders/milo.png') }}" alt="Milo" onerror="this.src='https://via.placeholder.com/300x300?text=Milo'">
+            </div>
+            <div class="founder-info">
+                <h3 class="founder-name">Milo, PhD</h3>
+                <p class="founder-title">Co-Founder & COO</p>
+                <p class="founder-bio">With extensive experience in financial markets and operations, Milo oversees Yorkian's business strategy and growth initiatives. His expertise in both traditional finance and fintech helps bridge the gap between technology and investment.</p>
+                <div class="founder-social">
+                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .founders-section {
+        padding: 4rem 0;
+    }
+    
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        text-align: center;
+        color: var(--primary-color);
+    }
+    
+    .founders-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 3rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .founder-card {
+        background: #ffffff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .founder-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    }
+    
+    .founder-image {
+        width: 100%;
+        height: 300px;
+        overflow: hidden;
+    }
+    
+    .founder-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    
+    .founder-card:hover .founder-image img {
+        transform: scale(1.05);
+    }
+    
+    .founder-info {
+        padding: 1.5rem;
+    }
+    
+    .founder-name {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+        color: var(--primary-color);
+    }
+    
+    .founder-title {
+        font-size: 1rem;
+        color: var(--secondary-color);
+        margin-bottom: 1rem;
+        font-weight: 500;
+    }
+    
+    .founder-bio {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: var(--text-color);
+        margin-bottom: 1.5rem;
+    }
+    
+    .founder-social {
+        display: flex;
+        gap: 1rem;
+    }
+    
+    .social-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: var(--light-bg);
+        color: var(--primary-color);
+        transition: all 0.3s ease;
+    }
+    
+    .social-link:hover {
+        background-color: var(--primary-color);
+        color: white;
+        transform: translateY(-2px);
+    }
+    
+    @media (max-width: 768px) {
+        .founders-grid {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+        }
+    }
+</style>
+{% endmacro %} 

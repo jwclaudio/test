@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Education{% endblock %}
+
+{% block content %}
+{% from "pages/education/components/education_header.html" import education_header %}
+{% from "pages/education/components/articles.html" import articles_section %}
+{% from "pages/education/components/resources.html" import resources_section %}
+{% from "pages/education/components/newsletter.html" import newsletter_section %}
+
+{{ education_header() }}
+{{ articles_section() }}
+{{ resources_section() }}
+{{ newsletter_section() }}
+{% endblock %} 

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}About Us - Yorkian{% endblock %}
+
+{% block additional_styles %}
+<style>
+    :root {
+        --primary-color: #2563eb;
+        --secondary-color: #3b82f6;
+        --text-color: #334155;
+        --light-bg: #f1f5f9;
+    }
+    
+    .about-page {
+        min-height: 100vh;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+{% from "pages/about_us/components/about_header.html" import about_header %}
+{% from "pages/about_us/components/mission.html" import mission_section %}
+{% from "pages/about_us/components/founders.html" import founders_section %}
+{% from "pages/about_us/components/story.html" import story_section %}
+{% from "pages/about_us/components/contact.html" import contact_section %}
+
+<div class="about-page">
+    {{ about_header() }}
+    {{ mission_section() }}
+    {{ founders_section() }}
+    {{ story_section() }}
+    {{ contact_section() }}
+</div>
+{% endblock %} 

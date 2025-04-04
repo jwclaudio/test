@@ -1,0 +1,708 @@
+{% extends "base.html" %}
+
+{% block title %}Yorkian - ETF Investment Platform{% endblock %}
+
+{% block additional_styles %}
+<style>
+    /* Base styles */
+    .home-page {
+        padding-top: 4rem;
+        min-height: 100vh;
+    }
+
+    /* Hero Section */
+    .hero-section {
+        position: relative;
+        text-align: center;
+        padding: 6rem 2rem;
+        background: linear-gradient(135deg, var(--bg-primary) 0%, #1a1f3c 100%);
+        color: var(--text-primary);
+        border-radius: 12px;
+        margin-bottom: 3rem;
+        overflow: hidden;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+        max-width: 700px;
+        margin: 0 auto 2rem;
+        color: var(--text-secondary);
+    }
+
+    .hero-cta-group {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+    }
+
+    .hero-cta {
+        display: inline-block;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .hero-cta-primary {
+        background: var(--accent-primary);
+        color: var(--text-primary);
+    }
+
+    .hero-cta-secondary {
+        background: transparent;
+        border: 2px solid var(--accent-primary);
+        color: var(--accent-primary);
+    }
+
+    .hero-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 242, 254, 0.2);
+    }
+
+    /* Features Section */
+    .features-highlight {
+        width: 100%;
+        min-height: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4rem 0;
+        background: var(--bg-secondary);
+    }
+
+    .features-grid {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+    }
+
+    .feature-card {
+        background: var(--card-bg);
+        backdrop-filter: blur(10px);
+        border-radius: 16px;
+        padding: 2rem;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0, 242, 254, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, transparent, rgba(0, 242, 254, 0.1), transparent);
+        transform: translateX(-100%);
+        transition: transform 0.6s ease;
+    }
+
+    .feature-card:hover::before {
+        transform: translateX(100%);
+    }
+
+    .feature-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+        color: var(--accent-gold);
+        animation: iconPulse 2s infinite;
+    }
+
+    .feature-title {
+        font-size: 1.5rem;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+    }
+
+    .feature-description {
+        color: var(--text-secondary);
+        line-height: 1.6;
+    }
+
+    /* Market Insights Section */
+    .market-insights {
+        width: 100%;
+        min-height: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4rem 0;
+        background: var(--bg-primary);
+    }
+
+    .insights-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    .insights-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .insights-title {
+        font-size: 2.5rem;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+    }
+
+    .insights-subtitle {
+        color: var(--text-secondary);
+        font-size: 1.2rem;
+    }
+
+    .insights-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+    }
+
+    .insight-card {
+        background: var(--card-bg);
+        backdrop-filter: blur(10px);
+        border-radius: 16px;
+        padding: 2rem;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0, 242, 254, 0.1);
+    }
+
+    .insight-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 242, 254, 0.2);
+    }
+
+    .insight-icon {
+        font-size: 2rem;
+        color: var(--accent-primary);
+        margin-bottom: 1.5rem;
+    }
+
+    .insight-title {
+        font-size: 1.5rem;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+    }
+
+    .insight-content {
+        color: var(--text-secondary);
+        line-height: 1.6;
+    }
+
+    /* How It Works Section */
+    .how-it-works {
+        width: 100%;
+        min-height: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4rem 0;
+        background: var(--bg-secondary);
+    }
+
+    .steps-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    .steps-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+
+    .step-card {
+        text-align: center;
+        position: relative;
+    }
+
+    .step-number {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-primary);
+        font-weight: bold;
+        margin: 0 auto 1.5rem;
+        box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
+        animation: numberPulse 2s infinite;
+    }
+
+    .step-title {
+        font-size: 1.5rem;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+    }
+
+    .step-description {
+        color: var(--text-secondary);
+        line-height: 1.6;
+    }
+
+    /* Testimonials Section */
+    .testimonials {
+        width: 100%;
+        min-height: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4rem 0;
+        background: var(--bg-primary);
+    }
+
+    .testimonials-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    .testimonial-card {
+        background: var(--card-bg);
+        backdrop-filter: blur(10px);
+        border-radius: 16px;
+        padding: 2rem;
+        margin: 1rem;
+        border: 1px solid rgba(0, 242, 254, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .testimonial-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 242, 254, 0.2);
+    }
+
+    .testimonial-content {
+        color: var(--text-secondary);
+        font-style: italic;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+    }
+
+    .testimonial-author {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .author-image {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid var(--accent-primary);
+        box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+    }
+
+    .author-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .author-name {
+        color: var(--text-primary);
+        font-weight: 600;
+    }
+
+    .author-title {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+
+    /* Market Ticker */
+    .market-ticker {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(19, 27, 46, 0.8);
+        backdrop-filter: blur(10px);
+        padding: 1rem 0;
+        overflow: hidden;
+        z-index: 3;
+        border-top: 1px solid rgba(0, 242, 254, 0.1);
+    }
+
+    .ticker-content {
+        display: flex;
+        animation: ticker 30s linear infinite;
+        white-space: nowrap;
+    }
+
+    .ticker-item {
+        position: relative;
+        padding: 0 1rem;
+    }
+
+    .ticker-item::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1px;
+        height: 70%;
+        background: rgba(0, 242, 254, 0.2);
+    }
+
+    .ticker-item.positive {
+        color: var(--success-green);
+    }
+
+    .ticker-item.negative {
+        color: var(--danger-red);
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes numberPulse {
+        0%, 100% { box-shadow: 0 0 20px rgba(0, 242, 254, 0.3); }
+        50% { box-shadow: 0 0 30px rgba(0, 242, 254, 0.5); }
+    }
+
+    @keyframes ticker {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-100%); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .features-grid,
+        .insights-grid,
+        .steps-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .insights-title,
+        .feature-title,
+        .step-title {
+            font-size: 1.8rem;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .hero-cta-group {
+            flex-direction: column;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="home-page">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div id="particles-js"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Your Gateway to Smart ETF Investing</h1>
+            <p class="hero-subtitle">Access professional-grade ETF screening tools, portfolio analysis, and market insights. Make data-driven investment decisions with confidence.</p>
+            <div class="hero-cta-group">
+                <a href="/screener" class="hero-cta hero-cta-primary">Start Screening ETFs</a>
+                <a href="/education" class="hero-cta hero-cta-secondary">Explore Features</a>
+            </div>
+        </div>
+        <div class="market-ticker">
+            <div class="ticker-content">
+                <div class="ticker-item positive">S&P 500 +1.2%</div>
+                <div class="ticker-item negative">NASDAQ -0.8%</div>
+                <div class="ticker-item positive">DOW +0.9%</div>
+                <div class="ticker-item positive">VOO +1.1%</div>
+                <div class="ticker-item negative">QQQ -0.7%</div>
+                <div class="ticker-item positive">VTI +0.8%</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Highlight Section -->
+    <section class="features-highlight">
+        <div class="features-grid">
+            <div class="feature-card" data-aos="fade-up">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+                <h3 class="feature-title">Advanced Analytics</h3>
+                <p class="feature-description">Get detailed insights into ETF performance, risk metrics, and historical data to make informed investment decisions.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> Performance tracking</li>
+                    <li><i class="fas fa-check"></i> Risk assessment</li>
+                    <li><i class="fas fa-check"></i> Historical analysis</li>
+                </ul>
+            </div>
+
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon">
+                    <i class="fas fa-filter"></i>
+                </div>
+                <h3 class="feature-title">Smart Screening</h3>
+                <p class="feature-description">Find the perfect ETFs using our advanced screening tools with customizable filters and real-time data.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> Custom filters</li>
+                    <li><i class="fas fa-check"></i> Real-time data</li>
+                    <li><i class="fas fa-check"></i> Save searches</li>
+                </ul>
+            </div>
+
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon">
+                    <i class="fas fa-portfolio"></i>
+                </div>
+                <h3 class="feature-title">Portfolio Management</h3>
+                <p class="feature-description">Track and optimize your portfolio with professional-grade tools and personalized recommendations.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> Portfolio tracking</li>
+                    <li><i class="fas fa-check"></i> Asset allocation</li>
+                    <li><i class="fas fa-check"></i> Rebalancing tools</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Insights Section -->
+    <section class="market-insights">
+        <div class="insights-container">
+            <div class="insights-header">
+                <h2 class="insights-title">Stay Ahead of the Market</h2>
+                <p class="insights-subtitle">Get real-time insights and analysis to make informed investment decisions.</p>
+            </div>
+            <div class="insights-grid">
+                <div class="insight-card" data-aos="fade-up">
+                    <div class="insight-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="insight-title">Market Trends</h3>
+                    <p class="insight-content">Track market movements and identify emerging trends with our advanced analytics.</p>
+                </div>
+
+                <div class="insight-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="insight-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3 class="insight-title">Investment Ideas</h3>
+                    <p class="insight-content">Discover new investment opportunities based on market analysis and expert insights.</p>
+                </div>
+
+                <div class="insight-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="insight-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="insight-title">Risk Management</h3>
+                    <p class="insight-content">Learn how to protect your investments with professional risk management strategies.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="steps-container">
+            <div class="section-header">
+                <h2 class="section-title">How It Works</h2>
+                <p class="section-subtitle">Get started with Yorkian in three simple steps</p>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card" data-aos="fade-up">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Create Your Account</h3>
+                    <p class="step-description">Sign up for free and get access to our comprehensive ETF screening and analysis tools.</p>
+                </div>
+
+                <div class="step-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Screen ETFs</h3>
+                    <p class="step-description">Use our advanced screening tools to find ETFs that match your investment criteria.</p>
+                </div>
+
+                <div class="step-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Build Your Portfolio</h3>
+                    <p class="step-description">Create and manage your portfolio with our professional-grade analysis tools.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="testimonials-container">
+            <div class="section-header">
+                <h2 class="section-title">What Our Users Say</h2>
+                <p class="section-subtitle">Join thousands of investors who trust Yorkian</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card" data-aos="fade-up">
+                    <p class="testimonial-content">"Yorkian's ETF screening tools have revolutionized how I research and select investments. The platform is intuitive and provides valuable insights."</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="John Doe" class="author-image">
+                        <div class="author-info">
+                            <span class="author-name">John Doe</span>
+                            <span class="author-title">Retail Investor</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                    <p class="testimonial-content">"The portfolio analysis features are exceptional. I can track my investments and get recommendations for optimization."</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/1.jpg" alt="Jane Smith" class="author-image">
+                        <div class="author-info">
+                            <span class="author-name">Jane Smith</span>
+                            <span class="author-title">Financial Advisor</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                    <p class="testimonial-content">"The educational resources are top-notch. I've learned so much about ETF investing through Yorkian's platform."</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/men/2.jpg" alt="Mike Johnson" class="author-image">
+                        <div class="author-info">
+                            <span class="author-name">Mike Johnson</span>
+                            <span class="author-title">Investment Enthusiast</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Initialize AOS
+    AOS.init({
+        duration: 800,
+        once: true
+    });
+
+    // Enhanced Particles.js Configuration
+    particlesJS('particles-js', {
+        particles: {
+            number: {
+                value: 80,
+                density: {
+                    enable: true,
+                    value_area: 800
+                }
+            },
+            color: {
+                value: ['#00f2fe', '#4facfe', '#b388ff']
+            },
+            shape: {
+                type: ['circle', 'triangle', 'edge'],
+                stroke: {
+                    width: 0,
+                    color: '#00f2fe'
+                }
+            },
+            opacity: {
+                value: 0.4,
+                random: true,
+                animation: {
+                    enable: true,
+                    speed: 1,
+                    opacity_min: 0.1,
+                    sync: false
+                }
+            },
+            size: {
+                value: 4,
+                random: true,
+                animation: {
+                    enable: true,
+                    speed: 2,
+                    size_min: 0.1,
+                    sync: false
+                }
+            },
+            line_linked: {
+                enable: true,
+                distance: 150,
+                color: '#4facfe',
+                opacity: 0.2,
+                width: 1
+            },
+            move: {
+                enable: true,
+                speed: 2,
+                direction: 'none',
+                random: true,
+                straight: false,
+                out_mode: 'out',
+                bounce: true,
+                attract: {
+                    enable: true,
+                    rotateX: 600,
+                    rotateY: 1200
+                }
+            }
+        },
+        interactivity: {
+            detect_on: 'canvas',
+            events: {
+                onhover: {
+                    enable: true,
+                    mode: 'grab'
+                },
+                onclick: {
+                    enable: true,
+                    mode: 'push'
+                },
+                resize: true
+            },
+            modes: {
+                grab: {
+                    distance: 140,
+                    line_linked: {
+                        opacity: 0.5
+                    }
+                },
+                push: {
+                    particles_nb: 4
+                }
+            }
+        },
+        retina_detect: true
+    });
+</script>
+{% endblock %} 

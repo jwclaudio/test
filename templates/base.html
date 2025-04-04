@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Yorkian{% endblock %}</title>
+    <!-- Add Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    {% block additional_styles %}{% endblock %}
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0f1f;    /* Deep space blue */
+            --bg-secondary: #131b2e;  /* Rich navy */
+            --accent-primary: #00f2fe; /* Electric cyan */
+            --accent-secondary: #4facfe; /* Bright blue */
+            --accent-gold: #ffd700;   /* Vibrant gold */
+            --accent-purple: #b388ff; /* Electric purple */
+            --text-primary: #ffffff;  /* Pure white */
+            --text-secondary: #a8b2d1; /* Soft blue-gray */
+            --card-bg: rgba(19, 27, 46, 0.7); /* Transparent navy */
+            --card-hover: rgba(19, 27, 46, 0.9);
+            --success-green: #00ff9d; /* Neon green */
+            --danger-red: #ff4d4d;    /* Bright red */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: 90px; /* Account for fixed navbar */
+        }
+
+        /* Main Content Container */
+        main {
+            flex: 1 0 auto;
+            width: 100%;
+            position: relative;
+        }
+
+        /* Ensure footer stays at bottom */
+        footer {
+            flex-shrink: 0;
+            width: 100%;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 90px;
+            z-index: 9999;
+            background: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 1rem;
+        }
+
+        .container-fluid {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .navbar-brand {
+            padding: 0;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .brand-text {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+            padding: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand:hover .brand-text {
+            transform: scale(1.05);
+        }
+
+        .navbar-toggler {
+            padding: 0.5rem;
+            border: none;
+            color: #1a1a1a;
+            font-size: 1.5rem;
+            display: none;
+            background-color: #ffffff;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-toggler:hover {
+            background-color: #f8f9fa;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+            outline: none;
+        }
+
+        .navbar-collapse {
+            display: flex !important;
+            flex-basis: auto;
+            justify-content: flex-end;
+        }
+
+        .navbar-nav {
+            display: flex;
+            align-items: center;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-item {
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-link {
+            color: #1a1a1a !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            transition: all 0.3s ease;
+            position: relative;
+            text-decoration: none;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #2563eb, #3b82f6);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #3b82f6 !important;
+        }
+
+        .nav-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* Utility Classes */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .section {
+            padding: 4rem 0;
+            width: 100%;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 991px) {
+            .navbar-toggler {
+                display: block;
+            }
+
+            .navbar-collapse {
+                display: none !important;
+                position: absolute;
+                top: 90px;
+                left: 0;
+                right: 0;
+                background: #ffffff;
+                padding: 1rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .navbar-collapse.show {
+                display: block !important;
+            }
+
+            .navbar-nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-item {
+                width: 100%;
+            }
+
+            .nav-link {
+                padding: 0.75rem 1rem !important;
+                width: 100%;
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                height: 90px;
+            }
+            
+            .brand-text {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include 'components/navbar.html' %}
+    
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include 'components/footer.html' %}
+
+    <!-- Add Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html> 

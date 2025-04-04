@@ -1,0 +1,138 @@
+<div class="compare-selection">
+    <div class="compare-selection-content">
+        <div class="selected-count">
+            <span class="count-number">0</span>
+            <span class="count-label">ETFs Selected</span>
+        </div>
+        <button class="compare-selected-btn" disabled>
+            <i class="fas fa-chart-line"></i>
+            Compare Selected
+        </button>
+    </div>
+</div>
+
+<style>
+    .compare-selection {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        z-index: 1000;
+        transition: all 0.3s ease;
+    }
+
+    .compare-selection-content {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 1rem 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .selected-count {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .count-number {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #000000;
+    }
+
+    .count-label {
+        font-size: 0.8rem;
+        color: #000000;
+        opacity: 0.7;
+    }
+
+    .compare-selected-btn {
+        background: #2563eb;
+        color: #ffffff;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 500;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .compare-selected-btn:disabled {
+        background: #94a3b8;
+        cursor: not-allowed;
+    }
+
+    .compare-selected-btn:not(:disabled):hover {
+        background: #1d4ed8;
+        transform: translateY(-1px);
+    }
+
+    @media (max-width: 768px) {
+        .compare-selection {
+            bottom: 1rem;
+            right: 1rem;
+            left: 1rem;
+        }
+
+        .compare-selection-content {
+            justify-content: space-between;
+        }
+    }
+</style>
+
+<script>
+    class CompareSelection {
+        constructor() {
+            this.element = document.createElement('div');
+            this.element.innerHTML = document.querySelector('.compare-selection').innerHTML;
+            document.body.appendChild(this.element);
+            
+            this.selectedCount = 0;
+            this.compareBtn = this.element.querySelector('.compare-selected-btn');
+            this.countNumber = this.element.querySelector('.count-number');
+            
+            this.setupEventListeners();
+        }
+
+        setupEventListeners() {
+            document.addEventListener('toggleComparison', (e) => this.handleToggleComparison(e.detail));
+            this.compareBtn.addEventListener('click', () => this.handleCompareClick());
+        }
+
+        handleToggleComparison(etf) {
+            const index = window.compareEtfs.comparisonList.findIndex(e => e.symbol === etf.symbol);
+            if (index === -1) {
+                if (this.selectedCount >= 3) {
+                    alert('You can only compare up to 3 ETFs at a time.');
+                    return;
+                }
+                this.selectedCount++;
+            } else {
+                this.selectedCount--;
+            }
+            this.updateUI();
+        }
+
+        updateUI() {
+            this.countNumber.textContent = this.selectedCount;
+            this.compareBtn.disabled = this.selectedCount < 2;
+        }
+
+        handleCompareClick() {
+            if (this.selectedCount >= 2) {
+                window.compareEtfs.render();
+            }
+        }
+    }
+
+    // Initialize the compare selection feature
+    document.addEventListener('DOMContentLoaded', () => {
+        window.compareSelection = new CompareSelection();
+    });
+</script> 

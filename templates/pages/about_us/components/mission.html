@@ -1,0 +1,140 @@
+{% macro mission_section() %}
+<div class="mission-section">
+    <div class="mission-container">
+        <div class="mission-content">
+            <h2 class="section-title">Our Mission</h2>
+            <p class="mission-statement">At Yorkian, we're on a mission to democratize access to sophisticated ETF investment tools, empowering individuals to make informed investment decisions with confidence.</p>
+            
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="value-title">Data-Driven Insights</h3>
+                    <p class="value-description">We believe in providing comprehensive, accurate data to help you make informed investment decisions.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="value-title">Accessibility</h3>
+                    <p class="value-description">We're committed to making sophisticated investment tools accessible to everyone, regardless of their experience level.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="value-title">Transparency</h3>
+                    <p class="value-description">We operate with complete transparency, providing clear information about our platform and methodologies.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3 class="value-title">Innovation</h3>
+                    <p class="value-description">We continuously innovate to provide cutting-edge tools and features that enhance your investment experience.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .mission-section {
+        padding: 5rem 0;
+        background-color: var(--light-bg);
+    }
+    
+    .mission-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+    
+    .mission-content {
+        text-align: center;
+    }
+    
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        color: var(--primary-color);
+    }
+    
+    .mission-statement {
+        font-size: 1.25rem;
+        line-height: 1.6;
+        color: var(--text-color);
+        max-width: 800px;
+        margin: 0 auto 3rem;
+    }
+    
+    .values-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+    
+    .value-card {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .value-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+    
+    .value-icon {
+        width: 60px;
+        height: 60px;
+        background-color: var(--primary-color);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        font-size: 1.5rem;
+    }
+    
+    .value-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--primary-color);
+    }
+    
+    .value-description {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: var(--text-color);
+    }
+    
+    @media (max-width: 768px) {
+        .mission-section {
+            padding: 3rem 0;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+        }
+        
+        .mission-statement {
+            font-size: 1.1rem;
+        }
+        
+        .values-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endmacro %} 

@@ -1,0 +1,246 @@
+<div class="watchlist" role="region" aria-label="ETF Watchlist">
+    <div class="watchlist-container">
+        <div class="watchlist-header">
+            <h3>Your Watchlist</h3>
+            <button class="clear-watchlist" aria-label="Clear watchlist">
+                <i class="fas fa-trash"></i>
+                Clear All
+            </button>
+        </div>
+        <div id="watchlist-grid" class="watchlist-grid">
+            <!-- Watchlist cards will be dynamically inserted here -->
+        </div>
+    </div>
+</div>
+
+<style>
+    .watchlist {
+        padding: 1rem;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .watchlist-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .watchlist-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .watchlist-header h3 {
+        color: #000000;
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .clear-watchlist {
+        background: none;
+        border: none;
+        padding: 0.5rem 1rem;
+        color: #dc2626;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+
+    .clear-watchlist:hover {
+        background: rgba(220, 38, 38, 0.1);
+    }
+
+    .watchlist-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+        padding: 1rem 0;
+    }
+
+    .watchlist-card {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        position: relative;
+    }
+
+    .watchlist-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    .watchlist-card .remove-btn {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: none;
+        border: none;
+        color: #dc2626;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+    }
+
+    .watchlist-card .remove-btn:hover {
+        background: rgba(220, 38, 38, 0.1);
+    }
+
+    .watchlist-metrics {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .metric-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .metric-label {
+        font-size: 0.8rem;
+        color: #000000;
+        opacity: 0.7;
+    }
+
+    .metric-value {
+        font-size: 0.9rem;
+        color: #000000;
+        font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+        .watchlist-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<script>
+    class Watchlist {
+        constructor() {
+            this.watchlist = [];
+            this.grid = document.getElementById('watchlist-grid');
+            this.clearButton = document.querySelector('.clear-watchlist');
+            this.setupEventListeners();
+            this.loadWatchlist();
+        }
+
+        setupEventListeners() {
+            this.clearButton.addEventListener('click', () => this.clearWatchlist());
+            document.addEventListener('toggleWatchlist', (e) => this.handleToggleWatchlist(e.detail));
+        }
+
+        loadWatchlist() {
+            try {
+                this.watchlist = JSON.parse(localStorage.getItem('etfWatchlist') || '[]');
+                this.render();
+            } catch (error) {
+                console.error('Error loading watchlist:', error);
+                this.watchlist = [];
+            }
+        }
+
+        saveWatchlist() {
+            try {
+                localStorage.setItem('etfWatchlist', JSON.stringify(this.watchlist));
+            } catch (error) {
+                console.error('Error saving watchlist:', error);
+            }
+        }
+
+        handleToggleWatchlist(etf) {
+            const index = this.watchlist.findIndex(e => e.symbol === etf.symbol);
+            if (index === -1) {
+                this.watchlist.push(etf);
+            } else {
+                this.watchlist.splice(index, 1);
+            }
+            this.saveWatchlist();
+            this.render();
+        }
+
+        clearWatchlist() {
+            this.watchlist = [];
+            this.saveWatchlist();
+            this.render();
+        }
+
+        render() {
+            this.grid.innerHTML = '';
+
+            if (this.watchlist.length === 0) {
+                this.grid.innerHTML = '<div class="empty-state">No ETFs in watchlist</div>';
+                return;
+            }
+
+            this.watchlist.forEach(etf => {
+                const card = this.createWatchlistCard(etf);
+                this.grid.appendChild(card);
+            });
+        }
+
+        createWatchlistCard(etf) {
+            const card = document.createElement('div');
+            card.className = 'watchlist-card';
+            card.innerHTML = `
+                <button class="remove-btn" aria-label="Remove from watchlist">
+                    <i class="fas fa-star"></i>
+                </button>
+                <div class="etf-symbol">${etf.symbol}</div>
+                <div class="watchlist-metrics">
+                    <div class="metric-item">
+                        <span class="metric-label">Asset Class</span>
+                        <span class="metric-value">${etf.asset_class}</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Region</span>
+                        <span class="metric-value">${etf.region}</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">AUM</span>
+                        <span class="metric-value">${etf.aum}</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Expense Ratio</span>
+                        <span class="metric-value">${etf.expense_ratio}%</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Price</span>
+                        <span class="metric-value">$${etf.price}</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">YTD Return</span>
+                        <span class="metric-value ${etf.ytd_return >= 0 ? 'positive' : 'negative'}">
+                            ${etf.ytd_return >= 0 ? '+' : ''}${etf.ytd_return}%
+                        </span>
+                    </div>
+                </div>
+            `;
+
+            const removeBtn = card.querySelector('.remove-btn');
+            removeBtn.addEventListener('click', () => this.handleToggleWatchlist(etf));
+
+            return card;
+        }
+    }
+
+    // Initialize the watchlist feature
+    document.addEventListener('DOMContentLoaded', () => {
+        window.watchlist = new Watchlist();
+    });
+</script> 

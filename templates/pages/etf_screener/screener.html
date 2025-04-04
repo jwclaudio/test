@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% from "pages/etf_screener/components/screener_header.html" import screener_header %}
+{% from "pages/etf_screener/components/screener_styles.html" import screener_styles %}
+
+{% block title %}ETF Screener - Yorkian{% endblock %}
+
+{% block additional_styles %}
+    {{ screener_styles() }}
+{% endblock %}
+
+{% block content %}
+<div class="screener-page">
+    {{ screener_header() }}
+    {% include 'pages/etf_screener/etf_screener.html' %}
+</div>
+{% endblock %}
